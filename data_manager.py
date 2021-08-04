@@ -9,17 +9,20 @@ AUTHORIZATION_HEADERS = {
 # This class is responsible for talking to the Google Sheet.
 
 class DataManager:
+
+    def __init__(self):
+        self.destination_data = {}
+
     # 2. Use the Sheety API to GET all the data in that sheet and print it out.
-    def destination_data(self):
+    def get_destination_data(self):
         sheet_response = requests.get(FLIGHT_DATA_ENDPOINT, headers=AUTHORIZATION_HEADERS)
-        print(sheet_response.status_code)
+        # print(sheet_response.status_code)     #prints 200 if API requests is successful
         data = sheet_response.json()
-        return data
+        self.destination_data = data["prices"]
+        return self.destination_data
 
 
-data_manager = DataManager()
-data_manager.destination_data()
-print(data_manager.destination_data())
+
 
 
 
