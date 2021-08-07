@@ -21,6 +21,18 @@ class DataManager:
         self.destination_data = data["prices"]
         return self.destination_data
 
+    def update_iata_code(self):
+        for city in self.destination_data:
+            object_id = city["id"]
+            update_url = f"https://api.sheety.co/91fd50510c8320842d8851c13cbed29d/flightDeals/prices/{object_id}"
+            params = {
+                "price": {
+                    "iataCode": city["iataCode"]
+                }
+            }
+            response = requests.put(url=update_url, json=params, headers=AUTHORIZATION_HEADERS)
+            print(response.text)
+
 
 
 

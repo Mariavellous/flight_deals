@@ -11,13 +11,15 @@ sheet_data = data_manager.get_destination_data()
 flight_search = FlightSearch()
 
 # Check to see if sheet_data has any values for "iataCode" key
-for row in sheet_data:
+for city in sheet_data:
   # if IATA Codes is empty
-  if row["iataCode"] == "":
+  if city["iataCode"] == "":
     # Pass each city name in sheet_data one-by-one to the FlightSearch class.
-    city_name = row["city"]
+    city_name = city["city"]
     # Use the response from the FlightSearch class to update the sheet_data
-    row["iataCode"] = flight_search.get_iata_code(city_name) # "TESTING"
+    city["iataCode"] = flight_search.get_iata_code(city_name) # "TESTING"
 
+  data_manager.get_destination_data = sheet_data
+  data_manager.update_iata_code()
+  # print(sheet_data)
 
-print(sheet_data)

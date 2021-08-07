@@ -7,6 +7,6 @@ class FlightSearch:
 
   # For now, the FlightSearch class can respond with "TESTING" instead of IATA code
   def get_iata_code(self, city):
-    code = "TESTING"
+    code = "TESTING2"
     return code
 
