@@ -31,7 +31,7 @@ class DataManager:
                 }
             }
             response = requests.put(url=update_url, json=params, headers=AUTHORIZATION_HEADERS)
-            print(response.text)
+            #print(response.text)
 
 
 
