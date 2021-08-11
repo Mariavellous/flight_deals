@@ -2,6 +2,8 @@
 from data_manager import DataManager
 from flight_search import FlightSearch
 from flight_data import FlightData
+from notification_manager import NotificationManager
+
 # 4. Pass everything stored in the "prices" (sheet name) key back to the main.py file and
 # store it in a variable called sheet_data, so that you can print the sheet_data from main.py
 data_manager = DataManager()
@@ -32,4 +34,14 @@ for city in sheet_data:
   city_iata_code = city["iataCode"]
   price = flight_data.get_flight_price(city_iata_code)
   print(f"{city_name}: £{price}")
+
+  # if price is lower than lowestPrice set on google sheet, send text notification of the flight
+  if price < city["lowestPrice"]:
+    departure_city = flight_data.departure_city
+    departure_iata_code = flight_data.departure_airport_code
+    departure_date = flight_data.outbound_date
+    arrival_date = flight_data.inbound_date
+    arrival_airport = flight_data.arrival_city_iata_code
+    notification_manager = NotificationManager(departure_city, departure_iata_code, departure_date, arrival_date)
+    notification_manager.send_price_alert(price, city_name, arrival_airport)
 
