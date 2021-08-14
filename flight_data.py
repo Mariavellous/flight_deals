@@ -46,16 +46,23 @@ class FlightData:
     }
     response = requests.get(url=flight_endpoint, params=params, headers=headers)
     # This data contains ALL the flight searches
+
     data = response.json()
+
     # print(response.text)
     # Extract the departure date of the flight search at index 0
-    departure_date = data["data"][0]["route"][0]["dTime"]  # result in unix time or epoch time
+    try:
+      departure_date = data["data"][0]["route"][0]["dTime"]  # result in unix time or epoch time
+    except:
+      print("There is no direct flight.")
+      return None
+
     # Convert the unix time into readable date
     date_of_departure = datetime.fromtimestamp(departure_date).strftime("%Y-%m-%d")
     # Set the date_of_departure as a FlightData attribute
     self.outbound_date = date_of_departure
     # Extract the arrival date of the flight search at index 0
-    arrival_date = data["data"][0]["route"][0]["aTime"]  # result in unix time or epoch time
+    arrival_date = data["data"][0]["route"][1]["aTime"]  # result in unix time or epoch time
     # Convert the unix time into readable date
     date_of_arrival = datetime.fromtimestamp(arrival_date).strftime("%Y-%m-%d")
     # Set the date_of_arrival as a FlightData attribute

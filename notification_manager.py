@@ -1,9 +1,11 @@
 # This class is responsible for sending notifications with the deal flight details.
-
+import os
+from dotenv import load_dotenv
 from twilio.rest import Client
+load_dotenv()
 # account_sid and auth_token from Twilio
-account_sid = "AC77c54aba8f54e9f8740698c234189b72"
-auth_token = "e41f6909cd58fa48bcc7f9f177b2ad91"
+account_sid = os.environ["TWILIO_ACCOUNT_SID"]
+auth_token = os.environ["TWILIO_AUTH_TOKEN"]
 
 
 class NotificationManager():
@@ -18,7 +20,7 @@ class NotificationManager():
         client = Client(account_sid, auth_token)
         message = client.messages \
             .create(
-            body=f"Low price alert: Only £{price} to fly from {self.city_name}-{self.city_iata_code}, to "
+            body=f"Low price alert: ✈️ Only £{price} to fly from {self.city_name}-{self.city_iata_code}, to "
                  f"{city_name}-{city_iata_code}, from {self.departure_date} to {self.arrival_date}.",
 
             from_="+19494384494",

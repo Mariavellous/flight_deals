@@ -33,10 +33,10 @@ for city in sheet_data:
   city_name = city["city"]
   city_iata_code = city["iataCode"]
   price = flight_data.get_flight_price(city_iata_code)
-  print(f"{city_name}: £{price}")
+  # print(f"{city_name}: £{price}")
 
   # if price is lower than lowestPrice set on google sheet, send text notification of the flight
-  if price < city["lowestPrice"]:
+  if price is not None and price < city["lowestPrice"]:
     departure_city = flight_data.departure_city
     departure_iata_code = flight_data.departure_airport_code
     departure_date = flight_data.outbound_date
